@@ -1,4 +1,4 @@
-import { isReadonly, shallowReadonly } from "../reactive";
+import { isProxy, isReadonly, shallowReadonly } from "../reactive";
 
 describe("shallowReadonly", () => {
   it("nested readonly", () => {
@@ -6,6 +6,7 @@ describe("shallowReadonly", () => {
     const wrapped = shallowReadonly(original);
     expect(isReadonly(wrapped)).toBe(true);
     expect(isReadonly(wrapped.bar)).toBe(false);
+    expect(isProxy(wrapped)).toBe(true);
   });
 
   it("wran when be set", () => {
