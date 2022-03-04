@@ -21,6 +21,6 @@ export function isReadonly(raw) {
   return !!raw[ReactiveFlags.IS_READONLY];
 }
 
-export function isActive(raw) {
+export function isReactive(raw) {
   return !!raw[ReactiveFlags.IS_REACTIVE];
 }

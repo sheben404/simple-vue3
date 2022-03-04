@@ -10,6 +10,13 @@ describe("readonly", () => {
     expect(wrapped.foo).toBe(1);
   });
 
+  it("nested readonly", () => {
+    const original = { foo: 1, bar: { bar: 2 } };
+    const wrapped = readonly(original);
+    expect(isReadonly(wrapped)).toBe(true);
+    expect(isReadonly(wrapped.bar)).toBe(true);
+  });
+
   it("wran when be set", () => {
     console.warn = jest.fn();
 
