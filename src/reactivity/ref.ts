@@ -6,6 +6,7 @@ class RefImpl {
   private _value;
   private _rawValue;
   public dep;
+  public __v_isRef = true;
   constructor(value) {
     this.dep = new Set();
     this._rawValue = value;
@@ -33,4 +34,12 @@ function convert(value) {
 
 export function ref(value) {
   return new RefImpl(value);
+}
+
+export function isRef(obj) {
+  return !!obj.__v_isRef;
+}
+
+export function unRef(obj) {
+  return isRef(obj) ? obj.value : obj;
 }
