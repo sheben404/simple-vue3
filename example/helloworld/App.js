@@ -1,15 +1,18 @@
 import { h } from "../../lib/mini-vue.esm.js";
 
-window.self = null
+window.self = null;
 export const App = {
   render() {
-    window.self = this
+    window.self = this;
     // ui
     return h(
       "div",
       {
         id: "root",
         class: ["red", "soft"],
+        onClick: () => console.log("click"),
+        onMousedown: () => console.log("mousedown"),
+        onMouseup: () => console.log("mouseup"),
       },
       "hi, " + this.msg
       // string

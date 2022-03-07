@@ -1,3 +1,4 @@
+import { getEventName, isOnEvent } from "../shared/index";
 import { ShapeFlags } from "../shared/ShapeFlags";
 import { createComponentInstance, setupComponent } from "./component";
 
@@ -24,7 +25,11 @@ function mountElement(vnode, container) {
   const el = (vnode.el = document.createElement(type));
   for (const key in props) {
     const val = props[key];
-    el.setAttribute(key, val);
+    if (isOnEvent(key)) {
+      el.addEventListener(getEventName(key), val);
+    } else {
+      el.setAttribute(key, val);
+    }
   }
   if (shapeFlag & ShapeFlags.TEXT_CHILDREN) {
     el.textContent = children;
