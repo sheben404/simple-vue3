@@ -8,7 +8,6 @@ export function render(vnode, container) {
 function patch(vnode, container) {
   const { shapeFlag } = vnode;
   if (shapeFlag & ShapeFlags.ELEMENT) {
-    console.log(shapeFlag);
     processElement(vnode, container);
   } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
     // 处理组件
