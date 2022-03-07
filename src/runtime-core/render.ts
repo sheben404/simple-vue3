@@ -1,11 +1,11 @@
 import { isObject } from "../shared/index";
 import { createComponentInstance, setupComponent } from "./component";
+import { createVNode } from "./vnode";
 
 export function render(vnode, container) {
   patch(vnode, container);
 }
 function patch(vnode, container) {
-  debugger
   if (typeof vnode.type === "string") {
     processElement(vnode, container);
   } else if (isObject(vnode.type)) {
@@ -20,7 +20,7 @@ function processElement(vnode, container) {
 
 function mountElement(vnode, container) {
   const { type, props, children } = vnode;
-  const el = document.createElement(type);
+  const el = (vnode.el = document.createElement(type));
   for (const key in props) {
     const val = props[key];
     el.setAttribute(key, val);
@@ -47,12 +47,13 @@ function mountComponent(vnode, container) {
   const instance = createComponentInstance(vnode);
 
   setupComponent(instance);
-  setupRenderEffect(instance, container);
+  setupRenderEffect(instance, vnode, container);
 }
-function setupRenderEffect(instance, container) {
-  const subTree = instance.render();
-
+function setupRenderEffect(instance, vnode, container) {
+  const { proxy } = instance;
+  const subTree = instance.render.call(proxy);
   // vnode => patch
   // vnode => element -> mountElement
   patch(subTree, container);
+  vnode.el = subTree.el;
 }
