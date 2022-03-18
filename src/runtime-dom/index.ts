@@ -5,11 +5,15 @@ export function createElement(type) {
   return document.createElement(type);
 }
 
-export function patchProp(el, key, val) {
+export function patchProp(el, key, prevVal, nextVal) {
   if (isOnEvent(key)) {
-    el.addEventListener(getEventName(key), val);
+    el.addEventListener(getEventName(key), nextVal);
   } else {
-    el.setAttribute(key, val);
+    if (nextVal == null) {
+      el.removeAttribute(key);
+    } else {
+      el.setAttribute(key, nextVal);
+    }
   }
 }
 
